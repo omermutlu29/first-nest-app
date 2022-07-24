@@ -1,28 +1,57 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "../../users/entities/user.entity";
+import { Column, Entity, Index, ObjectIdColumn } from "typeorm";
+import { ProductDescription } from "./description.entity";
+import { ProductImage } from "./image.entity";
+import { ProductVariation } from "./variation.entity";
+import { IsArray, IsNotEmpty, IsString, Validate, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
 @Entity()
 export class Product {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn()
   id: number;
 
   @Column()
+  @Index({ unique: true })
+  code: string;
+
+  @Column()
+  @IsString()
+  @IsNotEmpty()
   name: string;
 
   @Column()
-  code: string;
+  @IsString()
+  @IsNotEmpty()
+  lName: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column()
+  @IsString()
+  @IsNotEmpty()
+  dep: string;
 
-  @Column({ default: 0 })
-  stock: number;
+  @Column()
+  @IsString()
+  @IsNotEmpty()
+  cat: string;
 
-  @ManyToMany(type => User) @JoinTable({ name: "favorite_products" })
-  users: User[];
+  @Column()
+  @IsArray()
+  desc: ProductDescription[];
 
-  @ManyToMany(type => User) @JoinTable({ name: "orders" })
-  orders: User[];
+  @Column()
+  @Type(() => ProductImage)
+  img: ProductImage[];
+
+  @Column()
+  attrs: string[];
+
+  //secondary attributes not to be
+  @Column()
+  sAttrs: string[];
+
+  @Column()
+  @Type(() => ProductVariation)
+  vars: ProductVariation[];
 
 
 }

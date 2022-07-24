@@ -1,13 +1,13 @@
 version: '3.7'
 services:
   dev-db:
-    image: postgres:13
+    image: mongo
     ports:
-      - 5432:5432
+      - 27017:27017
+    restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: test_db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Omer@2015
     networks:
       - freecodecamp
 networks:

@@ -1,15 +1,18 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Product } from "../../products/entities/product.entity";
+import { Column, Entity,  ObjectIdColumn } from "typeorm";
+import { IsEmail, IsString } from "class-validator";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+
+  @ObjectIdColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
+  @IsEmail()
   email: string;
 
   @Column()
+  @IsString()
   password: string;
 
   @Column({ nullable: true })
@@ -23,11 +26,5 @@ export class User {
 
   @Column({ default: true })
   isDisabled: boolean;
-
-  @ManyToMany(type => Product) @JoinTable({ name: "favorite_products" })
-  products: Product[];
-
-  @ManyToMany(type => Product) @JoinTable({ name: "orders" })
-  orders: Product[];
 
 }
