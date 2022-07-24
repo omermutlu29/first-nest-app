@@ -5,21 +5,19 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthModule } from "./auth/auth.module";
 import { User } from "./users/entities/user.entity";
 import { Product } from "./products/entities/product.entity";
-const dbUrl = `mongodb://root:${encodeURIComponent('Omer%402015')}@localhost:27017/?authSource=admin`;
+import { ConfigModule } from "@nestjs/config";
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [ConfigModule.forRoot(),TypeOrmModule.forRoot({
     type: 'mongodb',
-    url: dbUrl,
+    url: `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/?authSource=admin`,
     database: 'food-api',
     entities: [User,Product],
     ssl: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,
     synchronize:true,
-
-  }), ProductsModule, UsersModule, AuthModule]
+  }), ProductsModule, UsersModule, AuthModule,]
 })
-
 export class AppModule {
 
 }

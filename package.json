@@ -8,7 +8,7 @@
   "scripts": {
     "db:dev:restart": "npm run db:dev:rm && sleep 1 && npm run db:dev:up",
     "db:dev:up": "docker-compose up -d",
-    "db:dev:rm":"docker compose rm dev-db -s -f -v",
+    "db:dev:rm": "docker compose rm dev-db -s -f -v",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/mapped-types": "*",
