@@ -1,4 +1,3 @@
-import { Column } from "typeorm";
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class ProductImage {
