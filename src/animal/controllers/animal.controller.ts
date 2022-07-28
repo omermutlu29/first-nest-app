@@ -13,12 +13,12 @@ export class AnimalController {
 
   @Get(":id")
   findOne(@Param("id") id: string) {
-    return this.animalService.findOne(+id);
+    return this.animalService.findOne(id);
   }
 
   @Get("kinds/:id")
-  getKindsOfAnimal(@Param("id") id: number) {
-    return this.animalService.getKindOfAnimals(+id);
+  getKindsOfAnimal(@Param("id") id: string) {
+    return this.animalService.getKindOfAnimals(id);
   }
 
 

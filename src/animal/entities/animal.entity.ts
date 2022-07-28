@@ -1,16 +1,17 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
-import { Kind, KindDocument, KindSchema } from "./kind.schema";
+import mongoose from "mongoose";
 
 export type AnimalDocument = Animal & Document;
 
 @Schema()
 export class Animal {
+
   @Prop()
   name: string;
 
-  @Prop({ required: true, type: [KindSchema] })
-  kinds: [Kind];
+  @Prop()
+  kinds:[]
+
 }
 
 export const AnimalSchema = SchemaFactory.createForClass(Animal);

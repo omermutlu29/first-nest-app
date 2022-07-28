@@ -1,30 +1,28 @@
-import { Column, Entity,  ObjectIdColumn } from "typeorm";
-import { IsEmail, IsString } from "class-validator";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { Exclude, Transform, Type } from "class-transformer";
+import { Address, AddressSchema } from "./address.entity";
 
-@Entity()
+export type UserDocument = User & Document;
+
+@Schema()
 export class User {
+  @Transform(({ value }) => value.toString())
+  _id: string;
 
-  @ObjectIdColumn()
-  id: number;
-
-  @Column({ unique: true })
-  @IsEmail()
+  @Prop({ unique: true })
   email: string;
 
-  @Column()
-  @IsString()
+  @Prop()
+  name: string;
+
+  @Prop()
+  @Exclude()
   password: string;
 
-  @Column({ nullable: true })
-  firstName: string;
-
-  @Column({ nullable: true })
-  lastName: string;
-
-  @Column({ default: true })
-  isActive: boolean;
-
-  @Column({ default: true })
-  isDisabled: boolean;
-
+  @Prop({ type: AddressSchema })
+  @Type(() => Address)
+  address: Address;
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);

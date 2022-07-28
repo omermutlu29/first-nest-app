@@ -1,42 +1,45 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Animal, AnimalDocument } from "../entities/animal.schema";
-import { Repository } from "typeorm";
-import { Model } from "mongoose";
+import { Animal } from "../entities/animal.entity";
 import { InjectModel } from "@nestjs/mongoose";
-import { Kind, KindDocument } from "../entities/kind.schema";
+import { Model } from "mongoose";
 
 @Injectable()
 export class AnimalService {
   constructor(
-    @InjectModel(Animal.name) private animalModel: Model<AnimalDocument>,
-    @InjectModel(Kind.name) private kindModel: Model<KindDocument>
+    @InjectModel("Animal")
+    private readonly animalModel: Model<Animal>
   ) {
   }
 
-  async findAll(): Promise<Animal[]> {
+  async findAll() {
 
-    const kind = await this.kindModel.create({
-      name: "test"
-    });
-    await this.animalModel.create({
-      name: "Dog",
-      kinds: [{ name: "testtt", imagePath:"asdasd" }]
-    });
+    const animal = new Animal();
+    animal.name='Dog';
+    await this.animalModel.create(animal)
 
+    /*const result = await this.animalModel.find({}).exec();
+    return result.map(item => {
+      return {
+        _id: item._id,
+        name: item.name,
+        kinds: item.kinds.map((kindItem) => {
+          return {
+            _id: kindItem.id,
+            name: kindItem.name,
+            photo: kindItem.photo
+          };
 
-    console.log(await this.animalModel.findOneAndUpdate({'kinds._id': "62ddde2f0ffa124737f16572"},{ "kinds.$": { name:"hellö" }}))
-
-
-    return await this.animalModel.find().exec();
+        })
+      };
+    });*/
   }
 
 
-  async findOne(id: number): Promise<Animal> | null {
-    return this.animalModel.findById(id);
+  async findOne(id: string) {
+
   }
 
-  async getKindOfAnimals(number: number) {
+  async getKindOfAnimals(id: string) {
 
   }
 }
