@@ -1,8 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { ObjectId, Types } from "mongoose";
-import { Address, AddressSchema } from "../../users/entities/address.entity";
-import { Transform, Type } from "class-transformer";
-import { Breed, BreedSchema } from "./breed.entity";
+import  { ObjectId } from "mongoose";
 import { ObjectIdColumn } from "typeorm";
 
 export type AnimalDocument = Animal & Document;

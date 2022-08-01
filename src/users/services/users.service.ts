@@ -2,19 +2,13 @@ import { ConflictException, Injectable } from "@nestjs/common";
 import { User, UserDocument } from "../entities/user.entity";
 import { hash } from "argon2";
 import { Model } from "mongoose";
-import { Post, PostDocument } from "../entities/post.entity";
-import { Category, CategoryDocument } from "../entities/category.entity";
 import { InjectModel } from "@nestjs/mongoose";
 import { CreateUserDto } from "../dto/user-dto";
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name)
-              private readonly userModel: Model<UserDocument>,
-              @InjectModel(Post.name)
-              private readonly postModel: Model<PostDocument>,
-              @InjectModel(Category.name)
-              private readonly categoryModel: Model<CategoryDocument>) {}
+              private readonly userModel: Model<UserDocument>) {}
 
   async create(createUserDto: CreateUserDto): Promise<Object> {
 
