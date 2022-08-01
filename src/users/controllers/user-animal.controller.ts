@@ -1,5 +1,5 @@
 import { UserAnimalService } from "../services/user-animal.service";
-import { AddAnimalDto, RemoveAnimalDTO } from "../dto/add-animal-dto";
+import { AddAnimalDto } from "../dto/user-animal-dto";
 import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
 import { UserAnimals } from "../entities/user-animals.entity";
 import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";

@@ -1,6 +1,6 @@
 import { InjectModel } from "@nestjs/mongoose";
 import { User, UserDocument } from "../entities/user.entity";
-import { AddAnimalDto, RemoveAnimalDTO } from "../dto/add-animal-dto";
+import { AddAnimalDto, RemoveAnimalDTO } from "../dto/user-animal-dto";
 import { UserAnimals } from "../entities/user-animals.entity";
 import { KindService } from "../../animal/services/kind.service";
 import { UsersService } from "./users.service";
