@@ -9,9 +9,8 @@ export class Category {
   constructor(name:string) {
     this.name = name;
   }
-
-  @Transform(({ value }) => value.toString())
-  _id: ObjectId;
+  /*@Transform(({ value }) => value.toString())
+    _id: string;*/
 
   @Prop()
   name: string;

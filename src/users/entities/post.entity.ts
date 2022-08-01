@@ -10,22 +10,22 @@ export type PostDocument = Post & Document;
 
 @Schema()
 export class Post {
-  @Transform(({ value }) => value.toString())
-  _id: ObjectId;
-
+  /*@Transform(({ value }) => value.toString())
+    _id: string;*/
   @Prop()
   title: string;
 
   @Prop()
   content: string;
 
+  /**BelongsTo not embedded*/
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
   @Type(() => User)
   author: User;
 
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: Category.name }],
-  })
+
+  /**manytomany not embedded*/
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: Category.name }] })
   @Type(() => Category)
   categories: [Category];
 }

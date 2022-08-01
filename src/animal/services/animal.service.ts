@@ -1,45 +1,37 @@
 import { Injectable } from "@nestjs/common";
-import { Animal } from "../entities/animal.entity";
+import { Animal, AnimalDocument } from "../entities/animal.entity";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import  { Model,  Types } from "mongoose";
+import { CreateAnimalDto } from "../dto/create-animal.dto";
 
 @Injectable()
 export class AnimalService {
   constructor(
-    @InjectModel("Animal")
-    private readonly animalModel: Model<Animal>
+    @InjectModel(Animal.name)
+    private readonly animalModel: Model<AnimalDocument>
   ) {
   }
 
-  async findAll() {
-
-    const animal = new Animal();
-    animal.name='Dog';
-    await this.animalModel.create(animal)
-
-    /*const result = await this.animalModel.find({}).exec();
-    return result.map(item => {
-      return {
-        _id: item._id,
-        name: item.name,
-        kinds: item.kinds.map((kindItem) => {
-          return {
-            _id: kindItem.id,
-            name: kindItem.name,
-            photo: kindItem.photo
-          };
-
-        })
-      };
-    });*/
+  async create(animalDto: CreateAnimalDto): Promise<Animal> {
+    return await this.animalModel.create(animalDto);
   }
 
-
-  async findOne(id: string) {
-
+  async findAll(): Promise<Animal[]> {
+    return await this.animalModel.aggregate([
+      {
+        $match: { "_id": new Types.ObjectId("62e76e1b382aab19fb84c2df") }
+      },
+      {
+        $lookup: {
+          from: "kinds", // collection name in db
+          localField: "_id",
+          foreignField: "animal",
+          as: "kinds"
+        }
+      }]).exec();
   }
 
-  async getKindOfAnimals(id: string) {
-
+  async findOne(id: string): Promise<Animal> {
+    return await this.animalModel.findById(id).exec();
   }
 }

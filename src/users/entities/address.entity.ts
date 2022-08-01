@@ -6,8 +6,8 @@ export type AddressDocument = Address & Document;
 
 @Schema()
 export class Address {
-  @Transform(({ value }) => value.toString())
-  _id: string;
+  /*@Transform(({ value }) => value.toString())
+  _id: string;*/
 
   @Prop()
   city: string;

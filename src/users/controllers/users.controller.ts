@@ -1,11 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from "@nestjs/common";
 import MongooseClassSerializerInterceptor from "../../Interceptors/mongooseClassSerializer.interceptor";
 import { UsersService } from "../services/users.service";
-import { CreateUserDto } from "../dto/create-user.dto";
-import { UpdateUserDto } from "../dto/update-user.dto";
-
+import { CreateUserDto, UpdateUserDto } from "../dto/user-dto";
+import { User } from "../entities/user.entity";
 @Controller("users")
-//@UseInterceptors(MongooseClassSerializerInterceptor(User))
+
+
+@UseInterceptors(MongooseClassSerializerInterceptor(User))
 export class UsersController {
   constructor(private readonly usersService: UsersService) {
   }
