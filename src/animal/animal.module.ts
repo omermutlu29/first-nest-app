@@ -3,19 +3,19 @@ import { AnimalController } from "./controllers/animal.controller";
 import { AnimalService } from "./services/animal.service";
 import { Animal, AnimalSchema } from "./entities/animal.entity";
 import { MongooseModule } from "@nestjs/mongoose";
-import { KindController } from "./controllers/kind.controller";
-import { KindService } from "./services/kind.service";
-import { Kind, KindSchema } from "./entities/kind.entity";
+import { BreedService } from "./services/breed.service";
+import { Breed, BreedSchema } from "./entities/breed.entity";
+import { BreedController } from "./controllers/kind.controller";
 
 
 @Module({
   imports: [MongooseModule.forFeature([
     { name: Animal.name, schema: AnimalSchema },
-    { name: Kind.name, schema: KindSchema },
+    { name: Breed.name, schema: BreedSchema },
     ])],
-  controllers: [AnimalController,KindController],
-  providers: [AnimalService,KindService],
-  exports:[KindService]
+  controllers: [AnimalController,BreedController],
+  providers: [AnimalService,BreedService],
+  exports:[BreedService]
 })
 export class AnimalModule {
 }

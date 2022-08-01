@@ -1,15 +1,15 @@
 import { InjectModel } from "@nestjs/mongoose";
 import { User, UserDocument } from "../entities/user.entity";
-import { AddAnimalDto, RemoveAnimalDTO } from "../dto/user-animal-dto";
+import { AddAnimalDto } from "../dto/user-animal-dto";
 import { UserAnimals } from "../entities/user-animals.entity";
-import { KindService } from "../../animal/services/kind.service";
+import { BreedService } from "../../animal/services/breed.service";
 import { UsersService } from "./users.service";
-import { Model, Types } from "mongoose";
+import { Model } from "mongoose";
 
 export class UserAnimalService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>,
               private readonly userService: UsersService,
-              private readonly kindService: KindService) {
+              private readonly BreedService: BreedService) {
   }
 
   async getAnimals(reqUser):Promise<UserAnimals[]> {
@@ -18,12 +18,11 @@ export class UserAnimalService {
   }
 
   async addAnimal(reqUser, addAnimalDto: AddAnimalDto):Promise<UserAnimals[]> {
-    const kind = await this.kindService.findOne(addAnimalDto.kind);
+    const Breed = await this.BreedService.findOne(addAnimalDto.Breed);
     const user = await this.userModel.findOne({ email: reqUser.username }).exec();
 
-    user.userAnimals.push({name:addAnimalDto.name,photo:addAnimalDto.photo,gender:addAnimalDto.gender,kind:kind._id });
+    user.userAnimals.push({name:addAnimalDto.name,photo:addAnimalDto.photo,gender:addAnimalDto.gender,Breed:Breed._id });
     await user.save();
-    console.log(user.userAnimals);
     return user.userAnimals
 
   }
@@ -32,7 +31,6 @@ export class UserAnimalService {
     const user = await this.userModel.findOne({ email: reqUser.username }).exec();
     user.userAnimals.pull(animalId);
     await user.save();
-    console.log(user.userAnimals);
     return user.userAnimals
   }
 }

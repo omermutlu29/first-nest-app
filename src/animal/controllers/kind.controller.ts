@@ -1,31 +1,31 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
-import { KindService } from "../services/kind.service";
-import { CreateKindDto } from "../dto/create-kind.dto";
-import { Kind } from "../entities/kind.entity";
+import { BreedService } from "../services/breed.service";
+import { CreateBreedDto } from "../dto/create-breed.dto";
+import { Breed } from "../entities/breed.entity";
 
-@Controller("kind")
-export class KindController {
-  constructor(private readonly kindService: KindService) {
+@Controller("breed")
+export class BreedController {
+  constructor(private readonly BreedService: BreedService) {
   }
 
   @Post(":animalId")
-  async create(@Param('animalId') animalId:string , @Body() kindDto: CreateKindDto) : Promise<Kind>{
-    return await this.kindService.create(animalId,kindDto)
+  async create(@Param('animalId') animalId:string , @Body() BreedDto: CreateBreedDto) : Promise<Breed>{
+    return await this.BreedService.create(animalId,BreedDto)
   }
 
   @Get()
-  async findAll(): Promise<Kind[]> {
-    return await this.kindService.findAll();
+  async findAll(): Promise<Breed[]> {
+    return await this.BreedService.findAll();
   }
 
   @Get(":id")
-  async findOne(@Param("id") id: string): Promise<Kind> {
-    return await this.kindService.findOne(id);
+  async findOne(@Param("id") id: string): Promise<Breed> {
+    return await this.BreedService.findOne(id);
   }
 
   @Get("findByAnimalId/:animalId")
-  async findByAnimalId(@Param('animalId') animalId:string): Promise<Kind[]>{
-    return await this.kindService.findByAnimalId(animalId);
+  async findByAnimalId(@Param('animalId') animalId:string): Promise<Breed[]>{
+    return await this.BreedService.findByAnimalId(animalId);
   }
 
 

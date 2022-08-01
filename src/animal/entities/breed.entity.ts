@@ -3,10 +3,10 @@ import { Transform, Type } from "class-transformer";
 import mongoose from "mongoose";
 import { Animal } from "./animal.entity";
 
-export type KindDocument = Kind & Document;
+export type BreedDocument = Breed & Document;
 
 @Schema()
-export class Kind {
+export class Breed {
   @Transform(({ value }) => value.toString())
   _id: string;
 
@@ -16,9 +16,9 @@ export class Kind {
   @Prop()
   photo: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Kind.name })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Breed.name })
   @Type(() => Animal)
   animal: Animal;
 }
 
-export const KindSchema = SchemaFactory.createForClass(Kind);
+export const BreedSchema = SchemaFactory.createForClass(Breed);

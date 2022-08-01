@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import {  Transform, Type } from "class-transformer";
 import mongoose, { Document } from "mongoose";
-import { Kind } from "../../animal/entities/kind.entity";
+import { Breed } from "../../animal/entities/breed.entity";
 import { Address } from "./address.entity";
 
 export type UserAnimalsDocument = Address & Document;
@@ -18,9 +18,9 @@ export class UserAnimals {
   @Prop()
   gender:string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Kind.name })
-  @Type(() => Kind)
-  kind: Kind;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Breed.name })
+  @Type(() => Breed)
+  Breed: Breed;
 
   @Prop()
   photo:string;

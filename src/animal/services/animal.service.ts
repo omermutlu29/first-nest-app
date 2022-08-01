@@ -20,10 +20,10 @@ export class AnimalService {
     return await this.animalModel.aggregate([
       {
         $lookup: {
-          from: "kinds", // collection name in db
+          from: "breeds", // collection name in db
           localField: "_id",
           foreignField: "animal",
-          as: "kinds"
+          as: "breeds"
         }
       }]).exec();
   }
@@ -36,10 +36,10 @@ export class AnimalService {
       $match: { "_id": new Types.ObjectId(id) }
     },{
       $lookup: {
-        from: "kinds", // collection name in db
+        from: "breeds", // collection name in db
         localField: "_id",
         foreignField: "animal",
-        as: "kinds"
+        as: "breeds"
       }
     }]).exec();
     return animal.length > 0 ? animal[0] : null;

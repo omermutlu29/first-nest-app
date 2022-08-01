@@ -1,5 +1,5 @@
 import { IsArray, IsEmail, IsNotEmpty, IsString, ValidateNested } from "class-validator";
-import { CreateKindDto } from "./create-kind.dto";
+import { CreateBreedDto } from "./create-breed.dto";
 import { Type } from "class-transformer";
 
 export class CreateAnimalDto {
@@ -8,6 +8,6 @@ export class CreateAnimalDto {
   name:string;
 
   @ValidateNested({ each: true })
-  @Type(() => CreateKindDto)
-  kinds: CreateKindDto[]
+  @Type(() => CreateBreedDto)
+  Breeds: CreateBreedDto[]
 }

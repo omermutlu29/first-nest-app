@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString } from "class-validator";
 export class AddAnimalDto {
   @IsNotEmpty()
   @IsString()
-  kind: string;
+  Breed: string;
 
   @IsNotEmpty()
   @IsString()

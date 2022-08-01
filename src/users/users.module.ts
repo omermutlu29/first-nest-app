@@ -7,7 +7,6 @@ import { Category, CategorySchema } from "./entities/category.entity";
 import { User, UserSchema } from "./entities/user.entity";
 import { UserAnimalController } from "./controllers/user-animal.controller";
 import { UserAnimalService } from "./services/user-animal.service";
-import { KindService } from "../animal/services/kind.service";
 import { AnimalModule } from "../animal/animal.module";
 
 @Module({
