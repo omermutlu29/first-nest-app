@@ -18,11 +18,7 @@ export class UserAnimals {
   @Prop()
   gender:string;
 
-
-  /**
-   * BelongsTo not Embedded
-   */
-  @Prop({ type: { type: mongoose.Schema.Types.ObjectId, ref: Kind.name } })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Kind.name })
   @Type(() => Kind)
   kind: Kind;
 

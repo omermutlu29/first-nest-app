@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { Animal, AnimalDocument } from "../entities/animal.entity";
 import { InjectModel } from "@nestjs/mongoose";
 import  { Model,  Types } from "mongoose";
@@ -19,9 +19,6 @@ export class AnimalService {
   async findAll(): Promise<Animal[]> {
     return await this.animalModel.aggregate([
       {
-        $match: { "_id": new Types.ObjectId("62e76e1b382aab19fb84c2df") }
-      },
-      {
         $lookup: {
           from: "kinds", // collection name in db
           localField: "_id",
@@ -31,7 +28,20 @@ export class AnimalService {
       }]).exec();
   }
 
-  async findOne(id: string): Promise<Animal> {
-    return await this.animalModel.findById(id).exec();
+  async findOne(id: string): Promise<Animal | null> {
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequestException('Requested id is invalid')
+    }
+    const animal = await this.animalModel.aggregate([ {
+      $match: { "_id": new Types.ObjectId(id) }
+    },{
+      $lookup: {
+        from: "kinds", // collection name in db
+        localField: "_id",
+        foreignField: "animal",
+        as: "kinds"
+      }
+    }]).exec();
+    return animal.length > 0 ? animal[0] : null;
   }
 }

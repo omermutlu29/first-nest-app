@@ -1,6 +1,6 @@
 import { UserAnimalService } from "../services/user-animal.service";
 import { AddAnimalDto, RemoveAnimalDTO } from "../dto/add-animal-dto";
-import { Body, Controller, Delete, Param, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
 import { UserAnimals } from "../entities/user-animals.entity";
 import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 
@@ -10,14 +10,21 @@ export class UserAnimalController {
   constructor(private readonly userAnimalService: UserAnimalService) {
   }
 
+  @Get()
+  async getAnimals(@Req() req): Promise<UserAnimals[]> {
+    const user = req.user;
+    return await this.userAnimalService.getAnimals(user);
+
+  }
+
   @Post()
-  async addAnimal(@Body() addAnimalDto: AddAnimalDto, @Req() req):Promise<UserAnimals[]>{
+  async addAnimal(@Body() addAnimalDto: AddAnimalDto, @Req() req): Promise<UserAnimals[]> {
     const user = req.user;
     return await this.userAnimalService.addAnimal(user, addAnimalDto);
   }
 
   @Delete(":animalId")
-  async removeAnimal(@Param("animalId") animalId: string, @Req() req):Promise<UserAnimals[]> {
+  async removeAnimal(@Param("animalId") animalId: string, @Req() req): Promise<UserAnimals[]> {
     const user = req.user;
     return await this.userAnimalService.removeAnimal(user, animalId);
   }

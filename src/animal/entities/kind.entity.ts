@@ -1,9 +1,10 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Transform, Type } from "class-transformer";
 import mongoose from "mongoose";
 import { Animal } from "./animal.entity";
 
 export type KindDocument = Kind & Document;
+
 @Schema()
 export class Kind {
   @Transform(({ value }) => value.toString())
@@ -15,8 +16,8 @@ export class Kind {
   @Prop()
   photo: string;
 
-  @Prop({type:{type:mongoose.Schema.Types.ObjectId, ref: Kind}})
-  @Type(() =>  Animal)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Kind.name })
+  @Type(() => Animal)
   animal: Animal;
 }
 

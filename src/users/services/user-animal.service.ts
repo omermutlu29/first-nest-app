@@ -12,11 +12,18 @@ export class UserAnimalService {
               private readonly kindService: KindService) {
   }
 
+  async getAnimals(reqUser):Promise<UserAnimals[]> {
+    const user = await this.userModel.findOne({ email: reqUser.username }).exec();
+    return user.userAnimals
+  }
+
   async addAnimal(reqUser, addAnimalDto: AddAnimalDto):Promise<UserAnimals[]> {
     const kind = await this.kindService.findOne(addAnimalDto.kind);
     const user = await this.userModel.findOne({ email: reqUser.username }).exec();
-    user.userAnimals.push({...addAnimalDto,kind:kind});
+
+    user.userAnimals.push({name:addAnimalDto.name,photo:addAnimalDto.photo,gender:addAnimalDto.gender,kind:kind._id });
     await user.save();
+    console.log(user.userAnimals);
     return user.userAnimals
 
   }
@@ -25,6 +32,7 @@ export class UserAnimalService {
     const user = await this.userModel.findOne({ email: reqUser.username }).exec();
     user.userAnimals.pull(animalId);
     await user.save();
+    console.log(user.userAnimals);
     return user.userAnimals
   }
 }

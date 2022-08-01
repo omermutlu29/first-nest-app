@@ -19,7 +19,7 @@ export class AnimalController {
   }
 
   @Get(":id")
-  async findOne(@Param("id") id: string) {
+  async findOne(@Param("id") id: string):Promise<Animal | null> {
     return await this.animalService.findOne(id);
   }
 
